@@ -43,6 +43,19 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public void updatePersonById(Integer id, PersonDTO personDTO) throws NotFoundException {
+        if (personRepository.getPersons().containsKey(id)) {
+            PersonModel person = personRepository.getPersons().get(id);
+            person.setFirstName(personDTO.getFirstName());
+            person.setLastName(personDTO.getLastName());
+            person.setPhoneNumber(personDTO.getPhoneNumber());
+            person.setEmail(personDTO.getEmail());
+        } else {
+            throw new NotFoundException(personRepository, id);
+        }
+    }
+
+    @Override
     public void deletePersonById(@NonNull Integer id) throws NotFoundException {
         if (personRepository.getPersons().containsKey(id)) {
             personRepository.getPersons().remove(id);

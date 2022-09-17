@@ -32,18 +32,27 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product")
-    public ResponseEntity<ProductModel> getProductById(@RequestParam Integer id) throws NotFoundException {
+    public ResponseEntity<ProductModel> getProductById(@RequestParam Integer id)
+            throws NotFoundException {
         return new ResponseEntity<>(service.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/product_name")
-    private ResponseEntity<Collection<ProductModel>> getProductByName(@RequestParam String name) throws NotFoundException {
+    public ResponseEntity<Collection<ProductModel>> getProductByName(@RequestParam String name)
+            throws NotFoundException {
         return new ResponseEntity<>(service.getProductByName(name), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<String> updateProductById(@RequestParam Integer id, @RequestBody ProductDTO productDTO)
+            throws NotFoundException {
+        service.updateProductById(id, productDTO);
+        return new ResponseEntity<>("Product with id " + id + " is updated", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/remove")
     public ResponseEntity<String> removeProductById(@RequestParam Integer id) throws NotFoundException {
         service.removeProductById(id);
-        return new ResponseEntity<>("Product with" + id + " is deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Product with id " + id + " is deleted", HttpStatus.OK);
     }
 }

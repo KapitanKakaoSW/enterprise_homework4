@@ -56,6 +56,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void updateProductById(@NonNull Integer id, ProductDTO productDTO) throws NotFoundException {
+        if (productRepository.getProducts().containsKey(id)) {
+            ProductModel product = productRepository.getProducts().get(id);
+            product.setProductName(productDTO.getProductName());
+            product.setProductDescription(productDTO.getProductDescription());
+            product.setProductPrice(productDTO.getPrice());
+        } else  {
+            throw new NotFoundException(productRepository, id);
+        }
+    }
+
+    @Override
     public void removeProductById(@NonNull Integer id) throws NotFoundException {
         if (productRepository.getProducts().containsKey(id)){
             productRepository.getProducts().remove(id);

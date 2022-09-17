@@ -16,6 +16,8 @@ public interface ProductService {
 
     Collection<ProductModel> getProductByName(String name) throws NotFoundException;
 
+    void updateProductById(Integer id, ProductDTO productDTO) throws NotFoundException;
+
     void removeProductById(Integer id) throws NotFoundException;
 
 }

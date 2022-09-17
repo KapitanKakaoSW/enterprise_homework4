@@ -14,5 +14,7 @@ public interface PersonService {
 
     PersonModel getPersonById(Integer id) throws NotFoundException;
 
+    void updatePersonById(Integer id, PersonDTO personDTO) throws NotFoundException;
+
     void deletePersonById(Integer id) throws NotFoundException;
 }
