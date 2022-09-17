@@ -38,7 +38,7 @@ public class PersonServiceImpl implements PersonService {
         if (personRepository.getPersons().containsKey(id)) {
             return personRepository.getPersons().get(id);
         } else {
-            throw new NotFoundException("Person with id " + id + " is not exist");
+            throw new NotFoundException(personRepository, id);
         }
     }
 
@@ -47,7 +47,7 @@ public class PersonServiceImpl implements PersonService {
         if (personRepository.getPersons().containsKey(id)) {
             personRepository.getPersons().remove(id);
         } else {
-            throw new NotFoundException("Person with id " + id + " is not exist");
+            throw new NotFoundException(personRepository, id);
         }
     }
 }

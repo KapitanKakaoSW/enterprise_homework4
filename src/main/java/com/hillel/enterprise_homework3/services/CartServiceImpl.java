@@ -45,7 +45,7 @@ public class CartServiceImpl implements CartService {
         if (cartRepository.getCarts().containsKey(id)){
             return cartRepository.getCarts().get(id);
         } else {
-            throw new NotFoundException("Cart with id " + id + " is not exist");
+            throw new NotFoundException(cartRepository, id);
         }
     }
 
@@ -59,7 +59,7 @@ public class CartServiceImpl implements CartService {
            cart.getProducts().add(productService.getProductById(productId));
            cart.setSum(cart.getSum().add(BigDecimal.valueOf(productService.getProductById(productId).getProductPrice())));
        } else {
-           throw new NotFoundException("Cart with id " + cartId + " is not exist");
+           throw new NotFoundException(cartRepository, cartId);
        }
     }
 
@@ -73,7 +73,7 @@ public class CartServiceImpl implements CartService {
             cart.getProducts().remove(productService.getProductById(productId));
             cart.setSum(cart.getSum().subtract(BigDecimal.valueOf(productService.getProductById(productId).getProductPrice())));
         } else {
-            throw new NotFoundException("Cart with id " + cartId + " is not exist");
+            throw new NotFoundException(cartRepository, cartId);
         }
     }
 
@@ -82,7 +82,7 @@ public class CartServiceImpl implements CartService {
         if (cartRepository.getCarts().containsKey(id)) {
             cartRepository.getCarts().get(id).getProducts().clear();
         } else {
-            throw new NotFoundException("Cart with id " + id + " is not exist");
+            throw new NotFoundException(cartRepository, id);
         }
     }
 
@@ -91,7 +91,7 @@ public class CartServiceImpl implements CartService {
         if (cartRepository.getCarts().containsKey(id)) {
             cartRepository.getCarts().remove(id);
         } else {
-            throw new NotFoundException("Cart with id " + id + " is not exist");
+            throw new NotFoundException(cartRepository, id);
         }
     }
 

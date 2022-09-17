@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
         if (productRepository.getProducts().containsKey(id)) {
             return productRepository.getProducts().get(id);
         } else {
-            throw new NotFoundException("Product with id " + id + " is not exist");
+            throw new NotFoundException(productRepository, id);
         }
     }
 
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
 
         if (products.isEmpty()) {
-            throw new NotFoundException("Products with name " + name + " is not exists");
+            throw new NotFoundException(productRepository, name);
         } else {
             return products;
         }
@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
         if (productRepository.getProducts().containsKey(id)){
             productRepository.getProducts().remove(id);
         } else {
-            throw new NotFoundException("Product with id " + id + " is not exist");
+            throw new NotFoundException(productRepository, id);
         }
     }
 }

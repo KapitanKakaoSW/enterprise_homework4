@@ -45,7 +45,7 @@ public class CartController {
         return new ResponseEntity<>("Successfully added", HttpStatus.OK);
     }
 
-    @PutMapping(value = "/cart_{cartId}/remove")
+    @DeleteMapping(value = "/cart_{cartId}/remove")
     public ResponseEntity<String> removeProductByProductIdAndCartId(@PathVariable Integer cartId,
                                                                     @RequestParam Integer productId)
             throws NotFoundException {
