@@ -1,7 +1,7 @@
 package com.hillel.enterprise_homework3.services;
 
 import com.hillel.enterprise_homework3.dtos.PersonDTO;
-import com.hillel.enterprise_homework3.exceptions.NotFoundException;
+import com.hillel.enterprise_homework3.exceptions.PersonNotFoundException;
 import com.hillel.enterprise_homework3.models.PersonModel;
 import com.hillel.enterprise_homework3.repositories.PersonRepository;
 import lombok.NonNull;
@@ -34,16 +34,16 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonModel getPersonById(@NonNull Integer id) throws NotFoundException {
+    public PersonModel getPersonById(@NonNull Integer id) throws PersonNotFoundException {
         if (personRepository.getPersons().containsKey(id)) {
             return personRepository.getPersons().get(id);
         } else {
-            throw new NotFoundException(personRepository, id);
+            throw new PersonNotFoundException(id);
         }
     }
 
     @Override
-    public void updatePersonById(Integer id, PersonDTO personDTO) throws NotFoundException {
+    public void updatePersonById(Integer id, PersonDTO personDTO) throws PersonNotFoundException {
         if (personRepository.getPersons().containsKey(id)) {
             PersonModel person = personRepository.getPersons().get(id);
             person.setFirstName(personDTO.getFirstName());
@@ -51,16 +51,16 @@ public class PersonServiceImpl implements PersonService {
             person.setPhoneNumber(personDTO.getPhoneNumber());
             person.setEmail(personDTO.getEmail());
         } else {
-            throw new NotFoundException(personRepository, id);
+            throw new PersonNotFoundException(id);
         }
     }
 
     @Override
-    public void deletePersonById(@NonNull Integer id) throws NotFoundException {
+    public void deletePersonById(@NonNull Integer id) throws PersonNotFoundException {
         if (personRepository.getPersons().containsKey(id)) {
             personRepository.getPersons().remove(id);
         } else {
-            throw new NotFoundException(personRepository, id);
+            throw new PersonNotFoundException(id);
         }
     }
 }

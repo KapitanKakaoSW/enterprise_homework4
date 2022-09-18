@@ -1,7 +1,7 @@
 package com.hillel.enterprise_homework3.controllers;
 
 import com.hillel.enterprise_homework3.dtos.ProductDTO;
-import com.hillel.enterprise_homework3.exceptions.NotFoundException;
+import com.hillel.enterprise_homework3.exceptions.ProductNotFoundException;
 import com.hillel.enterprise_homework3.models.ProductModel;
 import com.hillel.enterprise_homework3.services.ProductService;
 import org.springframework.http.HttpStatus;
@@ -34,25 +34,25 @@ public class ProductController {
 
     @GetMapping(value = "/product")
     public ResponseEntity<ProductModel> getProductById(@RequestParam Integer id)
-            throws NotFoundException {
+            throws ProductNotFoundException {
         return new ResponseEntity<>(service.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/product_name")
     public ResponseEntity<Collection<ProductModel>> getProductByName(@RequestParam String name)
-            throws NotFoundException {
+            throws ProductNotFoundException {
         return new ResponseEntity<>(service.getProductByName(name), HttpStatus.OK);
     }
 
     @PutMapping(value = "/update")
     public ResponseEntity<String> updateProductById(@RequestParam Integer id, @RequestBody ProductDTO productDTO)
-            throws NotFoundException {
+            throws ProductNotFoundException {
         service.updateProductById(id, productDTO);
         return new ResponseEntity<>("Product with id " + id + " is updated", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/remove")
-    public ResponseEntity<String> removeProductById(@RequestParam Integer id) throws NotFoundException {
+    public ResponseEntity<String> removeProductById(@RequestParam Integer id) throws ProductNotFoundException {
         service.removeProductById(id);
         return new ResponseEntity<>("Product with id " + id + " is deleted", HttpStatus.OK);
     }

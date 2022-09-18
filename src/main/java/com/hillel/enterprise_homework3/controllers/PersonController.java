@@ -1,7 +1,7 @@
 package com.hillel.enterprise_homework3.controllers;
 
 import com.hillel.enterprise_homework3.dtos.PersonDTO;
-import com.hillel.enterprise_homework3.exceptions.NotFoundException;
+import com.hillel.enterprise_homework3.exceptions.PersonNotFoundException;
 import com.hillel.enterprise_homework3.models.PersonModel;
 import com.hillel.enterprise_homework3.services.PersonService;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class PersonController {
 
     @PutMapping(value = "/update")
     public ResponseEntity<String> updatePersonById(@RequestParam Integer id, @RequestBody PersonDTO personDTO)
-            throws NotFoundException {
+            throws PersonNotFoundException {
         personService.updatePersonById(id, personDTO);
         return new ResponseEntity<>("Person with id " + id + " is updated", HttpStatus.OK);
     }

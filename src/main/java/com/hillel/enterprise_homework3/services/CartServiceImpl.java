@@ -1,6 +1,8 @@
 package com.hillel.enterprise_homework3.services;
 
-import com.hillel.enterprise_homework3.exceptions.NotFoundException;
+import com.hillel.enterprise_homework3.exceptions.CartNotFoundException;
+import com.hillel.enterprise_homework3.exceptions.PersonNotFoundException;
+import com.hillel.enterprise_homework3.exceptions.ProductNotFoundException;
 import com.hillel.enterprise_homework3.models.CartModel;
 import com.hillel.enterprise_homework3.repositories.CartRepository;
 import lombok.NonNull;
@@ -33,25 +35,24 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Collection<CartModel> getAllCartsByPersonId(@NonNull Integer id) {
-        Collection<CartModel> carts = cartRepository.getCarts().values()
+        return cartRepository.getCarts().values()
                 .stream().filter(cartModel -> cartModel.getOwnerId().equals(id))
                 .collect(Collectors.toList());
-        return carts;
 
     }
 
     @Override
-    public CartModel getCart(Integer id) throws NotFoundException {
+    public CartModel getCart(Integer id) throws CartNotFoundException {
         if (cartRepository.getCarts().containsKey(id)){
             return cartRepository.getCarts().get(id);
         } else {
-            throw new NotFoundException(cartRepository, id);
+            throw new CartNotFoundException(id);
         }
     }
 
     @Override
     public void addProductByProductIdAndCartId(@NonNull Integer productId, @NonNull Integer cartId)
-            throws NotFoundException {
+            throws CartNotFoundException, ProductNotFoundException {
 
        if (cartRepository.getCarts().containsKey(cartId)) {
            CartModel cart = cartRepository.getCarts().get(cartId);
@@ -59,13 +60,13 @@ public class CartServiceImpl implements CartService {
            cart.getProducts().add(productService.getProductById(productId));
            cart.setSum(cart.getSum().add(BigDecimal.valueOf(productService.getProductById(productId).getProductPrice())));
        } else {
-           throw new NotFoundException(cartRepository, cartId);
+           throw new CartNotFoundException(cartId);
        }
     }
 
     @Override
     public void removeProductByProductIdAndCartId(@NonNull Integer productId, @NonNull Integer cartId)
-            throws NotFoundException {
+            throws CartNotFoundException, ProductNotFoundException {
 
         if (cartRepository.getCarts().containsKey(cartId)) {
             CartModel cart = cartRepository.getCarts().get(cartId);
@@ -73,30 +74,30 @@ public class CartServiceImpl implements CartService {
             cart.getProducts().remove(productService.getProductById(productId));
             cart.setSum(cart.getSum().subtract(BigDecimal.valueOf(productService.getProductById(productId).getProductPrice())));
         } else {
-            throw new NotFoundException(cartRepository, cartId);
+            throw new CartNotFoundException(cartId);
         }
     }
 
     @Override
-    public void removeAllProductsByCartId(@NonNull Integer id) throws NotFoundException {
+    public void removeAllProductsByCartId(@NonNull Integer id) throws CartNotFoundException {
         if (cartRepository.getCarts().containsKey(id)) {
             cartRepository.getCarts().get(id).getProducts().clear();
         } else {
-            throw new NotFoundException(cartRepository, id);
+            throw new CartNotFoundException(id);
         }
     }
 
     @Override
-    public void removeCartById(@NonNull Integer id) throws NotFoundException {
+    public void removeCartById(@NonNull Integer id) throws CartNotFoundException {
         if (cartRepository.getCarts().containsKey(id)) {
             cartRepository.getCarts().remove(id);
         } else {
-            throw new NotFoundException(cartRepository, id);
+            throw new CartNotFoundException(id);
         }
     }
 
     @Override
-    public void removeAllCartsByPersonId(@NonNull Integer id) throws NotFoundException {
+    public void removeAllCartsByPersonId(@NonNull Integer id) throws PersonNotFoundException {
         personService.getPersonById(id).getCarts().clear();
     }
 }

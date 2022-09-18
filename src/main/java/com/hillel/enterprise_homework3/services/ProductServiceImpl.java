@@ -1,7 +1,7 @@
 package com.hillel.enterprise_homework3.services;
 
 import com.hillel.enterprise_homework3.dtos.ProductDTO;
-import com.hillel.enterprise_homework3.exceptions.NotFoundException;
+import com.hillel.enterprise_homework3.exceptions.ProductNotFoundException;
 import com.hillel.enterprise_homework3.models.ProductModel;
 import com.hillel.enterprise_homework3.repositories.ProductRepository;
 import lombok.NonNull;
@@ -34,45 +34,45 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductModel getProductById(@NonNull Integer id) throws NotFoundException {
+    public ProductModel getProductById(@NonNull Integer id) throws ProductNotFoundException {
         if (productRepository.getProducts().containsKey(id)) {
             return productRepository.getProducts().get(id);
         } else {
-            throw new NotFoundException(productRepository, id);
+            throw new ProductNotFoundException(id);
         }
     }
 
     @Override
-    public Collection<ProductModel> getProductByName(@NonNull String name) throws NotFoundException {
+    public Collection<ProductModel> getProductByName(@NonNull String name) throws ProductNotFoundException {
         Collection<ProductModel> products = productRepository.getProducts().values()
                 .stream().filter(productModel -> productModel.getProductName().equals(name))
                 .collect(Collectors.toList());
 
         if (products.isEmpty()) {
-            throw new NotFoundException(productRepository, name);
+            throw new ProductNotFoundException(name);
         } else {
             return products;
         }
     }
 
     @Override
-    public void updateProductById(@NonNull Integer id, ProductDTO productDTO) throws NotFoundException {
+    public void updateProductById(@NonNull Integer id, ProductDTO productDTO) throws ProductNotFoundException {
         if (productRepository.getProducts().containsKey(id)) {
             ProductModel product = productRepository.getProducts().get(id);
             product.setProductName(productDTO.getProductName());
             product.setProductDescription(productDTO.getProductDescription());
             product.setProductPrice(productDTO.getPrice());
         } else  {
-            throw new NotFoundException(productRepository, id);
+            throw new ProductNotFoundException(id);
         }
     }
 
     @Override
-    public void removeProductById(@NonNull Integer id) throws NotFoundException {
+    public void removeProductById(@NonNull Integer id) throws ProductNotFoundException {
         if (productRepository.getProducts().containsKey(id)){
             productRepository.getProducts().remove(id);
         } else {
-            throw new NotFoundException(productRepository, id);
+            throw new ProductNotFoundException(id);
         }
     }
 }
