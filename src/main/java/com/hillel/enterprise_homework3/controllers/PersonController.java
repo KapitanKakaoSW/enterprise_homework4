@@ -6,11 +6,12 @@ import com.hillel.enterprise_homework3.models.PersonModel;
 import com.hillel.enterprise_homework3.services.PersonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@RestController
+@Controller
 @RequestMapping("/persons")
 public class PersonController {
 

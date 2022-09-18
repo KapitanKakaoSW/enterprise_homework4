@@ -5,12 +5,13 @@ import com.hillel.enterprise_homework3.models.CartModel;
 import com.hillel.enterprise_homework3.services.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 
-@RestController
+@Controller
 @RequestMapping("/carts")
 public class CartController {
 
@@ -56,7 +57,7 @@ public class CartController {
     @DeleteMapping(value = "/clear")
     public ResponseEntity<String> removeAllProductsByCartId(@RequestParam Integer id) throws NotFoundException {
         cartService.removeAllProductsByCartId(id);
-        return new ResponseEntity<>("Successfully removed",HttpStatus.OK);
+        return new ResponseEntity<>("Successfully clear",HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/remove")

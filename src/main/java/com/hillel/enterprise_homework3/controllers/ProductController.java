@@ -6,11 +6,12 @@ import com.hillel.enterprise_homework3.models.ProductModel;
 import com.hillel.enterprise_homework3.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@RestController
+@Controller
 @RequestMapping("/products")
 public class ProductController {
 
