@@ -1,4 +1,4 @@
-package com.hillel.enterprise_homework3.dtos;
+package com.hillel.enterprise_homework4.dtos;
 
 import lombok.Data;
 

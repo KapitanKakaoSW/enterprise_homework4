@@ -1,25 +1,28 @@
-package com.hillel.enterprise_homework3.models;
+package com.hillel.enterprise_homework4.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import javax.persistence.*;
 
 @Getter
+@Setter
+@Entity
+@NoArgsConstructor
 public class ProductModel {
 
-    private static final AtomicInteger idCounter = new AtomicInteger(0);
-    private final Integer productId;
-
-    @Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer productId;
     private String productName;
-    @Setter
     private String productDescription;
-    @Setter
     private Double productPrice;
 
+    @ManyToOne
+    private ShopModel shop;
+
     public ProductModel(String productName, String productDescription, Double productPrice) {
-        this.productId = idCounter.incrementAndGet();
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;

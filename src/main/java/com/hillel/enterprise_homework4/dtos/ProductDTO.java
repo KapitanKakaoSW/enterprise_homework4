@@ -1,4 +1,4 @@
-package com.hillel.enterprise_homework3.dtos;
+package com.hillel.enterprise_homework4.dtos;
 
 import lombok.Data;
 
@@ -8,4 +8,5 @@ public class ProductDTO {
     private String productName;
     private String productDescription;
     private Double price;
+    private Integer shopId;
 }

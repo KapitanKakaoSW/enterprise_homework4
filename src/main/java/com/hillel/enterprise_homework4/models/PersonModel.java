@@ -1,32 +1,32 @@
-package com.hillel.enterprise_homework3.models;
+package com.hillel.enterprise_homework4.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
+@Setter
+@Entity
+@NoArgsConstructor
 public class PersonModel {
-
-    private static final AtomicInteger idCounter = new AtomicInteger(0);
-
-    private final Integer personId;
-
-    @Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer personId;
     private String firstName;
-    @Setter
     private String lastName;
-    @Setter
     private String phoneNumber;
-    @Setter
     private String email;
 
-    private final List<CartModel> carts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<CartModel> carts = new ArrayList<>();
 
     public PersonModel(String firstName, String lastName, String phoneNumber, String email) {
-        this.personId = idCounter.incrementAndGet();
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

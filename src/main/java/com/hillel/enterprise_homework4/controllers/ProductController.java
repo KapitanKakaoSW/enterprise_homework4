@@ -1,9 +1,10 @@
-package com.hillel.enterprise_homework3.controllers;
+package com.hillel.enterprise_homework4.controllers;
 
-import com.hillel.enterprise_homework3.dtos.ProductDTO;
-import com.hillel.enterprise_homework3.exceptions.ProductNotFoundException;
-import com.hillel.enterprise_homework3.models.ProductModel;
-import com.hillel.enterprise_homework3.services.ProductService;
+import com.hillel.enterprise_homework4.dtos.ProductDTO;
+import com.hillel.enterprise_homework4.exceptions.ProductNotFoundException;
+import com.hillel.enterprise_homework4.exceptions.ShopNotFoundException;
+import com.hillel.enterprise_homework4.models.ProductModel;
+import com.hillel.enterprise_homework4.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,9 +23,9 @@ public class ProductController {
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity<String> addProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<String> addProduct(@RequestBody ProductDTO productDTO) throws ShopNotFoundException {
         service.addProduct(productDTO);
-        return new ResponseEntity<>( productDTO.getProductName() + " is created", HttpStatus.OK);
+        return new ResponseEntity<>(productDTO.getProductName() + " is created", HttpStatus.OK);
     }
 
     @GetMapping(value = "/all")
@@ -38,15 +39,9 @@ public class ProductController {
         return new ResponseEntity<>(service.getProductById(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/product_name")
-    public ResponseEntity<Collection<ProductModel>> getProductByName(@RequestParam String name)
-            throws ProductNotFoundException {
-        return new ResponseEntity<>(service.getProductByName(name), HttpStatus.OK);
-    }
-
     @PutMapping(value = "/update")
     public ResponseEntity<String> updateProductById(@RequestParam Integer id, @RequestBody ProductDTO productDTO)
-            throws ProductNotFoundException {
+            throws ProductNotFoundException, ShopNotFoundException {
         service.updateProductById(id, productDTO);
         return new ResponseEntity<>("Product with id " + id + " is updated", HttpStatus.OK);
     }

@@ -1,4 +1,4 @@
-package com.hillel.enterprise_homework3.exceptions;
+package com.hillel.enterprise_homework4.exceptions;
 
 public class ProductNotFoundException extends Exception {
 
@@ -6,7 +6,4 @@ public class ProductNotFoundException extends Exception {
         super("Product with id " + id + " is not exist");
     }
 
-    public ProductNotFoundException(String name) {
-        super("Product with name " + name + " is not exist");
-    }
 }

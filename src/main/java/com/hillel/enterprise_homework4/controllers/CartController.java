@@ -1,16 +1,14 @@
-package com.hillel.enterprise_homework3.controllers;
+package com.hillel.enterprise_homework4.controllers;
 
-import com.hillel.enterprise_homework3.exceptions.CartNotFoundException;
-import com.hillel.enterprise_homework3.exceptions.PersonNotFoundException;
-import com.hillel.enterprise_homework3.exceptions.ProductNotFoundException;
-import com.hillel.enterprise_homework3.models.CartModel;
-import com.hillel.enterprise_homework3.services.CartService;
+import com.hillel.enterprise_homework4.exceptions.CartNotFoundException;
+import com.hillel.enterprise_homework4.exceptions.PersonNotFoundException;
+import com.hillel.enterprise_homework4.exceptions.ProductNotFoundException;
+import com.hillel.enterprise_homework4.models.CartModel;
+import com.hillel.enterprise_homework4.services.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
 
 
 @Controller
@@ -25,14 +23,9 @@ public class CartController {
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity<String> addCart(@RequestParam Integer id) {
+    public ResponseEntity<String> addCart(@RequestParam Integer id) throws PersonNotFoundException {
         cartService.createCart(id);
-        return new ResponseEntity<>("Cart with id " + id + " is created", HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/all")
-    public ResponseEntity<Collection<CartModel>> getAllCartsByPersonId(@RequestParam Integer id) throws CartNotFoundException {
-        return new ResponseEntity<>(cartService.getAllCartsByPersonId(id), HttpStatus.OK);
+        return new ResponseEntity<>("Cart added to person with id  " + id, HttpStatus.OK);
     }
 
     @GetMapping(value = "/cart")
@@ -63,14 +56,8 @@ public class CartController {
     }
 
     @DeleteMapping(value = "/remove")
-    public ResponseEntity<String> removeCartById(@RequestParam Integer id) throws CartNotFoundException {
+    public ResponseEntity<String> removeCartById(@RequestParam Integer id) throws CartNotFoundException, PersonNotFoundException {
         cartService.removeCartById(id);
-        return new ResponseEntity<>("Successfully removed", HttpStatus.OK);
-    }
-
-    @DeleteMapping(value = "/person_remove")
-    public ResponseEntity<String> removeAllCartsByPersonId(@RequestParam Integer id) throws PersonNotFoundException {
-        cartService.removeAllCartsByPersonId(id);
         return new ResponseEntity<>("Successfully removed", HttpStatus.OK);
     }
 }
